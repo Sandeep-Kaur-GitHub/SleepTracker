@@ -15,7 +15,7 @@ import org.junit.Assert.*
 import org.junit.Before
 import java.io.IOException
 @RunWith(AndroidJUnit4::class)
-class ExampleInstrumentedTest {
+class ExampleInstrumentedTest{
     private lateinit var sleepDatabaseDao: SleepDatabaseDao
     private lateinit var sleepDatabase: SleepDatabase
 
@@ -35,7 +35,7 @@ class ExampleInstrumentedTest {
 
     @Test
     @Throws(Exception::class)
-    suspend fun insertAndGetNight() {
+     fun insertAndGetNight()= runTest{
         val night = SleepNight()
         sleepDatabaseDao.insert(night)
         val tonight = sleepDatabaseDao.getTonight()
