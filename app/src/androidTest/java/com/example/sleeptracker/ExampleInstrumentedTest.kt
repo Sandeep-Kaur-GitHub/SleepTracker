@@ -6,6 +6,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.sleeptracker.database.SleepDatabase
 import com.example.sleeptracker.database.SleepDatabaseDao
 import com.example.sleeptracker.database.SleepNight
+import kotlinx.coroutines.runBlocking
 import org.junit.After
 import kotlinx.coroutines.test.runTest
 
@@ -36,7 +37,7 @@ class ExampleInstrumentedTest{
 
     @Test
     @Throws(Exception::class)
-     fun insertAndGetNight()= runTest{
+     fun insertAndGetNight()= runBlocking{
         val night = SleepNight()
         sleepDatabaseDao.insert(night)
         val tonight = sleepDatabaseDao.getTonight()
