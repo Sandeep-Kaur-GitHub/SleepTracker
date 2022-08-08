@@ -7,6 +7,7 @@ import com.example.sleeptracker.database.SleepDatabase
 import com.example.sleeptracker.database.SleepDatabaseDao
 import com.example.sleeptracker.database.SleepNight
 import org.junit.After
+import kotlinx.coroutines.test.runTest
 
 import org.junit.Test
 import org.junit.runner.RunWith
