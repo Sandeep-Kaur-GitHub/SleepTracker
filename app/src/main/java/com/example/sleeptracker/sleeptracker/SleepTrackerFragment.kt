@@ -37,6 +37,9 @@ class SleepTrackerFragment : Fragment() {
                 sleepTrackerViewModel.doneNavigating()
             }
         })
+        sleepTrackerViewModel.nightsString.observe(viewLifecycleOwner){
+            formattedNights->binding.textview.text=formattedNights
+        }
         return binding.root
     }
 }
