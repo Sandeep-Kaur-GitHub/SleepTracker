@@ -19,6 +19,7 @@ class SleepTrackerFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         val binding: FragmentSleepTrackerBinding = DataBindingUtil.inflate(
         inflater, R.layout.fragment_sleep_tracker, container, false)
         val application= requireNotNull(this.activity).application
