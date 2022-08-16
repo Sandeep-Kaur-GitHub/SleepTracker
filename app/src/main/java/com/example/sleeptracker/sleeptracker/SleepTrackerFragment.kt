@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -39,9 +40,19 @@ class SleepTrackerFragment : Fragment() {
                 sleepTrackerViewModel.doneNavigating()
             }
         })
-        sleepTrackerViewModel.nightsString.observe(viewLifecycleOwner){
+    /*    sleepTrackerViewModel.nightsString.observe(viewLifecycleOwner){
             formattedNights->binding.textview.text=formattedNights
-        }
+        }*/
+        val adapter= SleepNightAdapter()
+        binding.sleepList.adapter=adapter
+        sleepTrackerViewModel.night.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                adapter.data=it
+            }
+        })
+
+
+
         sleepTrackerViewModel.showSnackBarEvent.observe(viewLifecycleOwner, Observer {
             if (it == true) { // Observed state is true.
                 Snackbar.make(
