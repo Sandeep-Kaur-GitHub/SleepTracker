@@ -6,24 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sleeptracker.R
+import androidx.recyclerview.widget.ListAdapter
 import com.example.sleeptracker.convertDurationToFormatted
 import com.example.sleeptracker.convertNumericQualityToString
 import com.example.sleeptracker.database.SleepNight
 
-class SleepNightAdapter: RecyclerView.Adapter<SleepNightAdapter.ViewHolder>()
-{
-    var data= listOf<SleepNight>()
-    set(value) {
-        field=value
-        notifyDataSetChanged()
-    }
-    override fun getItemCount(): Int =data.size
+class SleepNightAdapter : androidx.recyclerview.widget.ListAdapter<SleepNight,
+        SleepNightAdapter.ViewHolder>(SleepNightDiffCallback()) {
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item= data[position]
-        val res = holder.itemView.context.resources
-        holder.bind(item, res)
+        val item = getItem(position)
+            holder.bind(item)
 
     }
 
@@ -32,12 +27,12 @@ class SleepNightAdapter: RecyclerView.Adapter<SleepNightAdapter.ViewHolder>()
         return ViewHolder.from(parent)
     }
 
-    class ViewHolder private constructor(itemView:View):RecyclerView.ViewHolder(itemView)
-    {
-        val sleepLength:TextView= itemView.findViewById(R.id.sleep_length)
-        val quality:TextView=itemView.findViewById(R.id.quality_string)
-        val  qualityImage:ImageView=itemView.findViewById(R.id.imageView)
-        fun bind(item: SleepNight, res: Resources) {
+    class ViewHolder private constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val sleepLength: TextView = itemView.findViewById(R.id.sleep_length)
+        val quality: TextView = itemView.findViewById(R.id.quality_string)
+        val qualityImage: ImageView = itemView.findViewById(R.id.imageView)
+        fun bind(item: SleepNight) {
+            val res = itemView.context.resources
             sleepLength.text =
                 convertDurationToFormatted(item.startTimeMilli, item.endTimeMilli, res)
             quality.text = convertNumericQualityToString(item.sleepQuality, res)
@@ -54,6 +49,7 @@ class SleepNightAdapter: RecyclerView.Adapter<SleepNightAdapter.ViewHolder>()
                 }
             )
         }
+
         companion object {
             fun from(parent: ViewGroup): ViewHolder {
                 val view = LayoutInflater.from(parent.context)
@@ -63,5 +59,14 @@ class SleepNightAdapter: RecyclerView.Adapter<SleepNightAdapter.ViewHolder>()
         }
     }
 
+    class SleepNightDiffCallback : DiffUtil.ItemCallback<SleepNight>() {
+        override fun areItemsTheSame(oldItem: SleepNight, newItem: SleepNight): Boolean {
+            return oldItem.nightId == newItem.nightId
+        }
+
+        override fun areContentsTheSame(oldItem: SleepNight, newItem: SleepNight): Boolean {
+            return oldItem == newItem
+        }
+    }
 
 }
