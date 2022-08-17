@@ -7,12 +7,17 @@
         <variable
             name="sleepXML"
             type="com.example.sleeptracker.database.SleepNight" />
+        <variable
+            name="clickListener"
+            type="com.example.sleeptracker.sleeptracker.SleepNightAdapter.SleepNightListener"/>
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/quality_image"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:onClick="@{() -> clickListener.onClick(sleepXML)}">
 
         <ImageView
             android:id="@+id/imageView"
